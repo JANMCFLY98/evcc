@@ -286,3 +286,26 @@ func ValidatePhaseEntities(phases []string) ([]string, error) {
 		return nil, fmt.Errorf("must contain three-phase entities (L1, L2, L3), got %d", len(entities))
 	}
 }
+
+
+// This is used for phase switching via a Home Assistant select entity.
+func (c *Connection) CallSelectService(entity, option string) error {
+	data := map[string]any{
+		"entity_id": entity,
+		"option":    option,
+	}
+
+	return c.CallService("select", "select_option", data)
+}
+
+// GetStringState retrieves the state of an entity as a raw string.
+// This is useful for select entities where the state is a text value
+// (e.g. "1", "3" for phase switching).
+func (c *Connection) GetStringState(entity string) (string, error) {
+	state, err := c.GetState(entity)
+	if err != nil {
+		return "", err
+	}
+
+	return state.State, nil
+}
