@@ -299,7 +299,7 @@ func (c *Connection) CallSelectService(entity, option string) error {
 }
 
 // GetStringState retrieves the state of an entity as a raw string.
-// This is useful for select entities where the state is a text value
+// This is useful for select entities where the state is a text value 
 func (c *Connection) GetStringState(entity string) (string, error) {
 	state, err := c.GetState(entity)
 	if err != nil {
